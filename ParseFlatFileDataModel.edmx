@@ -1,0 +1,702 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ParseFlatFile.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="PIT_App_ProcessRunControl">
+          <Key>
+            <PropertyRef Name="ProcessRunControlID" />
+          </Key>
+          <Property Name="ProcessRunControlID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProcessID" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="BeginTime" Type="datetime" Nullable="false" />
+          <Property Name="EndTime" Type="datetime" />
+          <Property Name="Status" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="ErrorMessage" Type="nvarchar(max)" />
+          <Property Name="DataColumn" Type="varchar" MaxLength="255" />
+          <Property Name="DataColumn1" Type="varchar" MaxLength="255" />
+          <Property Name="DataColumn2" Type="varchar" MaxLength="255" />
+          <Property Name="DataColumn3" Type="varchar" MaxLength="255" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="varchar" MaxLength="128" />
+          <Property Name="LastModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PIT_Meta_ProcessDefn">
+          <Key>
+            <PropertyRef Name="ProcessID" />
+          </Key>
+          <Property Name="ProcessID" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="varchar" MaxLength="128" />
+          <Property Name="LastModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PIT_Meta_ProjectCategories">
+          <Key>
+            <PropertyRef Name="ProjectCatID" />
+          </Key>
+          <Property Name="ProjectCatID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="60" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="varchar" MaxLength="128" />
+          <Property Name="LastModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PIT_Meta_ProjectSubCategories">
+          <Key>
+            <PropertyRef Name="ProjectSubCatID" />
+          </Key>
+          <Property Name="ProjectSubCatID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectCatID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="60" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="varchar" MaxLength="128" />
+          <Property Name="LastModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PIT_Stg_ParsingHdr">
+          <Key>
+            <PropertyRef Name="DataLoadID" />
+          </Key>
+          <Property Name="DataLoadID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProcessRunControlID" Type="int" Nullable="false" />
+          <Property Name="County" Type="varchar" MaxLength="40" />
+          <Property Name="Highway" Type="varchar" MaxLength="40" />
+          <Property Name="length" Type="varchar" MaxLength="30" />
+          <Property Name="Control" Type="varchar" MaxLength="30" />
+          <Property Name="DBEGoal" Type="varchar" MaxLength="30" />
+          <Property Name="ProjectNumber" Type="varchar" MaxLength="30" />
+          <Property Name="Type" Type="varchar" MaxLength="100" />
+          <Property Name="TimeForCompletion" Type="varchar" MaxLength="40" />
+          <Property Name="Guaranty" Type="varchar" MaxLength="30" />
+          <Property Name="EstimatedCost" Type="varchar" MaxLength="30" />
+          <Property Name="BidsReceivedUntil" Type="varchar" MaxLength="30" />
+          <Property Name="BidsWillBeOpened" Type="varchar" MaxLength="30" />
+          <Property Name="MailOrDeliverBidsTo" Type="varchar(max)" />
+          <Property Name="PandSEContact" Type="varchar(max)" />
+          <Property Name="Active" Type="bit" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="varchar" MaxLength="128" />
+          <Property Name="LastModifiedDate" Type="datetime" />
+          <Property Name="ElectronicBiddingWebsite" Type="varchar" MaxLength="1000" />
+          <Property Name="SBEGoal" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="PIT_Stg_ParsingItemDetail">
+          <Key>
+            <PropertyRef Name="DataLoadItemID" />
+          </Key>
+          <Property Name="DataLoadItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DataLoadID" Type="int" />
+          <Property Name="ALT" Type="varchar" MaxLength="20" />
+          <Property Name="ItemNO" Type="varchar" MaxLength="40" />
+          <Property Name="DESCode" Type="varchar" MaxLength="40" />
+          <Property Name="ItemDescription" Type="varchar" MaxLength="320" />
+          <Property Name="Unit" Type="varchar" MaxLength="10" />
+          <Property Name="ApproximateQantities" Type="varchar" MaxLength="40" />
+          <Property Name="BidPrice" Type="varchar" MaxLength="40" />
+          <Property Name="Amount" Type="varchar" MaxLength="40" />
+          <Property Name="Seq" Type="varchar" MaxLength="40" />
+          <Property Name="Active" Type="bit" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="varchar" MaxLength="128" />
+          <Property Name="LastModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PIT_Stg_TxDotProjectItems">
+          <Key>
+            <PropertyRef Name="DataLoadItemID" />
+          </Key>
+          <Property Name="DataLoadItemID" Type="int" Nullable="false" />
+          <Property Name="DataLoadID" Type="int" Nullable="false" />
+          <Property Name="AltCode" Type="varchar" MaxLength="20" />
+          <Property Name="ItemNo" Type="varchar" MaxLength="20" />
+          <Property Name="DESCode" Type="varchar" MaxLength="20" />
+          <Property Name="Description" Type="varchar" MaxLength="80" />
+          <Property Name="UOM" Type="varchar" MaxLength="4" />
+          <Property Name="ApproxQuantity" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BidPrice" Type="money" />
+          <Property Name="Amount" Type="money" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="varchar" MaxLength="128" />
+          <Property Name="LastModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PIT_Stg_TxDotProjects">
+          <Key>
+            <PropertyRef Name="DataLoadID" />
+          </Key>
+          <Property Name="DataLoadID" Type="int" Nullable="false" />
+          <Property Name="ProcessRunControlID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="County" Type="varchar" MaxLength="40" />
+          <Property Name="Highway" Type="varchar" MaxLength="40" />
+          <Property Name="Length" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="ControlNumber" Type="varchar" MaxLength="40" />
+          <Property Name="DBEGoal" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="ProjectNumber" Type="varchar" MaxLength="40" />
+          <Property Name="Type" Type="varchar" MaxLength="80" />
+          <Property Name="TimeForCompletion" Type="int" />
+          <Property Name="Guaranty" Type="money" />
+          <Property Name="EstimatedCost" Type="money" />
+          <Property Name="BidsReceivedUntil" Type="datetime" />
+          <Property Name="BidsWillBeOpened" Type="datetime" />
+          <Property Name="DeliverBidsTo" Type="varchar(max)" />
+          <Property Name="PSEContact" Type="varchar(max)" />
+          <Property Name="ProjectExistsAlready" Type="bit" Nullable="false" />
+          <Property Name="ActiveQuotesExistAlready" Type="bit" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="varchar" MaxLength="128" />
+          <Property Name="LastModifiedDate" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__PIT_App_P__Proce__1B0907CE">
+          <End Role="PIT_Meta_ProcessDefn" Type="Self.PIT_Meta_ProcessDefn" Multiplicity="1" />
+          <End Role="PIT_App_ProcessRunControl" Type="Self.PIT_App_ProcessRunControl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PIT_Meta_ProcessDefn">
+              <PropertyRef Name="ProcessID" />
+            </Principal>
+            <Dependent Role="PIT_App_ProcessRunControl">
+              <PropertyRef Name="ProcessID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PIT_Meta___Proje__3A81B327">
+          <End Role="PIT_Meta_ProjectCategories" Type="Self.PIT_Meta_ProjectCategories" Multiplicity="1" />
+          <End Role="PIT_Meta_ProjectSubCategories" Type="Self.PIT_Meta_ProjectSubCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PIT_Meta_ProjectCategories">
+              <PropertyRef Name="ProjectCatID" />
+            </Principal>
+            <Dependent Role="PIT_Meta_ProjectSubCategories">
+              <PropertyRef Name="ProjectCatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PIT_Stg_P__DataL__48CFD27E">
+          <End Role="PIT_Stg_ParsingHdr" Type="Self.PIT_Stg_ParsingHdr" Multiplicity="0..1" />
+          <End Role="PIT_Stg_ParsingItemDetail" Type="Self.PIT_Stg_ParsingItemDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PIT_Stg_ParsingHdr">
+              <PropertyRef Name="DataLoadID" />
+            </Principal>
+            <Dependent Role="PIT_Stg_ParsingItemDetail">
+              <PropertyRef Name="DataLoadID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PIT_Stg_T__DataL__2D27B809">
+          <End Role="PIT_Stg_TxDotProjects" Type="Self.PIT_Stg_TxDotProjects" Multiplicity="1" />
+          <End Role="PIT_Stg_TxDotProjectItems" Type="Self.PIT_Stg_TxDotProjectItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PIT_Stg_TxDotProjects">
+              <PropertyRef Name="DataLoadID" />
+            </Principal>
+            <Dependent Role="PIT_Stg_TxDotProjectItems">
+              <PropertyRef Name="DataLoadID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PIT_Stg_T__Proce__20C1E124">
+          <End Role="PIT_App_ProcessRunControl" Type="Self.PIT_App_ProcessRunControl" Multiplicity="1" />
+          <End Role="PIT_Stg_TxDotProjects" Type="Self.PIT_Stg_TxDotProjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PIT_App_ProcessRunControl">
+              <PropertyRef Name="ProcessRunControlID" />
+            </Principal>
+            <Dependent Role="PIT_Stg_TxDotProjects">
+              <PropertyRef Name="ProcessRunControlID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ParseFlatFileStoreContainer">
+          <EntitySet Name="PIT_App_ProcessRunControl" EntityType="Self.PIT_App_ProcessRunControl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PIT_Meta_ProcessDefn" EntityType="Self.PIT_Meta_ProcessDefn" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PIT_Meta_ProjectCategories" EntityType="Self.PIT_Meta_ProjectCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PIT_Meta_ProjectSubCategories" EntityType="Self.PIT_Meta_ProjectSubCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PIT_Stg_ParsingHdr" EntityType="Self.PIT_Stg_ParsingHdr" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PIT_Stg_ParsingItemDetail" EntityType="Self.PIT_Stg_ParsingItemDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PIT_Stg_TxDotProjectItems" EntityType="Self.PIT_Stg_TxDotProjectItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PIT_Stg_TxDotProjects" EntityType="Self.PIT_Stg_TxDotProjects" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__PIT_App_P__Proce__1B0907CE" Association="Self.FK__PIT_App_P__Proce__1B0907CE">
+            <End Role="PIT_Meta_ProcessDefn" EntitySet="PIT_Meta_ProcessDefn" />
+            <End Role="PIT_App_ProcessRunControl" EntitySet="PIT_App_ProcessRunControl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PIT_Meta___Proje__3A81B327" Association="Self.FK__PIT_Meta___Proje__3A81B327">
+            <End Role="PIT_Meta_ProjectCategories" EntitySet="PIT_Meta_ProjectCategories" />
+            <End Role="PIT_Meta_ProjectSubCategories" EntitySet="PIT_Meta_ProjectSubCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PIT_Stg_P__DataL__48CFD27E" Association="Self.FK__PIT_Stg_P__DataL__48CFD27E">
+            <End Role="PIT_Stg_ParsingHdr" EntitySet="PIT_Stg_ParsingHdr" />
+            <End Role="PIT_Stg_ParsingItemDetail" EntitySet="PIT_Stg_ParsingItemDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PIT_Stg_T__DataL__2D27B809" Association="Self.FK__PIT_Stg_T__DataL__2D27B809">
+            <End Role="PIT_Stg_TxDotProjects" EntitySet="PIT_Stg_TxDotProjects" />
+            <End Role="PIT_Stg_TxDotProjectItems" EntitySet="PIT_Stg_TxDotProjectItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PIT_Stg_T__Proce__20C1E124" Association="Self.FK__PIT_Stg_T__Proce__20C1E124">
+            <End Role="PIT_App_ProcessRunControl" EntitySet="PIT_App_ProcessRunControl" />
+            <End Role="PIT_Stg_TxDotProjects" EntitySet="PIT_Stg_TxDotProjects" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ParseFlatFile" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="PIT_App_ProcessRunControl">
+          <Key>
+            <PropertyRef Name="ProcessRunControlID" />
+          </Key>
+          <Property Name="ProcessRunControlID" Type="Guid" Nullable="false" />
+          <Property Name="ProcessID" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BeginTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ErrorMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DataColumn" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="DataColumn1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="DataColumn2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="DataColumn3" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastModifiedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="PIT_Meta_ProcessDefn" Relationship="Self.FK__PIT_App_P__Proce__1B0907CE" FromRole="PIT_App_ProcessRunControl" ToRole="PIT_Meta_ProcessDefn" />
+          <NavigationProperty Name="PIT_Stg_TxDotProjects" Relationship="Self.FK__PIT_Stg_T__Proce__20C1E124" FromRole="PIT_App_ProcessRunControl" ToRole="PIT_Stg_TxDotProjects" />
+        </EntityType>
+        <EntityType Name="PIT_Meta_ProcessDefn">
+          <Key>
+            <PropertyRef Name="ProcessID" />
+          </Key>
+          <Property Name="ProcessID" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastModifiedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="PIT_App_ProcessRunControl" Relationship="Self.FK__PIT_App_P__Proce__1B0907CE" FromRole="PIT_Meta_ProcessDefn" ToRole="PIT_App_ProcessRunControl" />
+        </EntityType>
+        <EntityType Name="PIT_Meta_ProjectCategories">
+          <Key>
+            <PropertyRef Name="ProjectCatID" />
+          </Key>
+          <Property Name="ProjectCatID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastModifiedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="PIT_Meta_ProjectSubCategories" Relationship="Self.FK__PIT_Meta___Proje__3A81B327" FromRole="PIT_Meta_ProjectCategories" ToRole="PIT_Meta_ProjectSubCategories" />
+        </EntityType>
+        <EntityType Name="PIT_Meta_ProjectSubCategories">
+          <Key>
+            <PropertyRef Name="ProjectSubCatID" />
+          </Key>
+          <Property Name="ProjectSubCatID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectCatID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastModifiedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="PIT_Meta_ProjectCategories" Relationship="Self.FK__PIT_Meta___Proje__3A81B327" FromRole="PIT_Meta_ProjectSubCategories" ToRole="PIT_Meta_ProjectCategories" />
+        </EntityType>
+        <EntityType Name="PIT_Stg_ParsingHdr">
+          <Key>
+            <PropertyRef Name="DataLoadID" />
+          </Key>
+          <Property Name="DataLoadID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProcessRunControlID" Type="Int32" Nullable="false" />
+          <Property Name="County" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Highway" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="length" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Control" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DBEGoal" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ProjectNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TimeForCompletion" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Guaranty" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="EstimatedCost" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="BidsReceivedUntil" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="BidsWillBeOpened" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="MailOrDeliverBidsTo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PandSEContact" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastModifiedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ElectronicBiddingWebsite" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="SBEGoal" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PIT_Stg_ParsingItemDetail" Relationship="Self.FK__PIT_Stg_P__DataL__48CFD27E" FromRole="PIT_Stg_ParsingHdr" ToRole="PIT_Stg_ParsingItemDetail" />
+        </EntityType>
+        <EntityType Name="PIT_Stg_ParsingItemDetail">
+          <Key>
+            <PropertyRef Name="DataLoadItemID" />
+          </Key>
+          <Property Name="DataLoadItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DataLoadID" Type="Int32" />
+          <Property Name="ALT" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ItemNO" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DESCode" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ItemDescription" Type="String" MaxLength="320" FixedLength="false" Unicode="false" />
+          <Property Name="Unit" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ApproximateQantities" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="BidPrice" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Amount" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Seq" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastModifiedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="PIT_Stg_ParsingHdr" Relationship="Self.FK__PIT_Stg_P__DataL__48CFD27E" FromRole="PIT_Stg_ParsingItemDetail" ToRole="PIT_Stg_ParsingHdr" />
+        </EntityType>
+        <EntityType Name="PIT_Stg_TxDotProjectItems">
+          <Key>
+            <PropertyRef Name="DataLoadItemID" />
+          </Key>
+          <Property Name="DataLoadItemID" Type="Int32" Nullable="false" />
+          <Property Name="DataLoadID" Type="Int32" Nullable="false" />
+          <Property Name="AltCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ItemNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DESCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="UOM" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="ApproxQuantity" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BidPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastModifiedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="PIT_Stg_TxDotProjects" Relationship="Self.FK__PIT_Stg_T__DataL__2D27B809" FromRole="PIT_Stg_TxDotProjectItems" ToRole="PIT_Stg_TxDotProjects" />
+        </EntityType>
+        <EntityType Name="PIT_Stg_TxDotProjects">
+          <Key>
+            <PropertyRef Name="DataLoadID" />
+          </Key>
+          <Property Name="DataLoadID" Type="Int32" Nullable="false" />
+          <Property Name="ProcessRunControlID" Type="Guid" Nullable="false" />
+          <Property Name="County" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Highway" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Length" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="ControlNumber" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DBEGoal" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="ProjectNumber" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="TimeForCompletion" Type="Int32" />
+          <Property Name="Guaranty" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="EstimatedCost" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="BidsReceivedUntil" Type="DateTime" Precision="3" />
+          <Property Name="BidsWillBeOpened" Type="DateTime" Precision="3" />
+          <Property Name="DeliverBidsTo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PSEContact" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ProjectExistsAlready" Type="Boolean" Nullable="false" />
+          <Property Name="ActiveQuotesExistAlready" Type="Boolean" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastModifiedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="PIT_App_ProcessRunControl" Relationship="Self.FK__PIT_Stg_T__Proce__20C1E124" FromRole="PIT_Stg_TxDotProjects" ToRole="PIT_App_ProcessRunControl" />
+          <NavigationProperty Name="PIT_Stg_TxDotProjectItems" Relationship="Self.FK__PIT_Stg_T__DataL__2D27B809" FromRole="PIT_Stg_TxDotProjects" ToRole="PIT_Stg_TxDotProjectItems" />
+        </EntityType>
+        <Association Name="FK__PIT_App_P__Proce__1B0907CE">
+          <End Role="PIT_Meta_ProcessDefn" Type="Self.PIT_Meta_ProcessDefn" Multiplicity="1" />
+          <End Role="PIT_App_ProcessRunControl" Type="Self.PIT_App_ProcessRunControl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PIT_Meta_ProcessDefn">
+              <PropertyRef Name="ProcessID" />
+            </Principal>
+            <Dependent Role="PIT_App_ProcessRunControl">
+              <PropertyRef Name="ProcessID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PIT_Stg_T__Proce__20C1E124">
+          <End Role="PIT_App_ProcessRunControl" Type="Self.PIT_App_ProcessRunControl" Multiplicity="1" />
+          <End Role="PIT_Stg_TxDotProjects" Type="Self.PIT_Stg_TxDotProjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PIT_App_ProcessRunControl">
+              <PropertyRef Name="ProcessRunControlID" />
+            </Principal>
+            <Dependent Role="PIT_Stg_TxDotProjects">
+              <PropertyRef Name="ProcessRunControlID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PIT_Meta___Proje__3A81B327">
+          <End Role="PIT_Meta_ProjectCategories" Type="Self.PIT_Meta_ProjectCategories" Multiplicity="1" />
+          <End Role="PIT_Meta_ProjectSubCategories" Type="Self.PIT_Meta_ProjectSubCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PIT_Meta_ProjectCategories">
+              <PropertyRef Name="ProjectCatID" />
+            </Principal>
+            <Dependent Role="PIT_Meta_ProjectSubCategories">
+              <PropertyRef Name="ProjectCatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PIT_Stg_P__DataL__48CFD27E">
+          <End Role="PIT_Stg_ParsingHdr" Type="Self.PIT_Stg_ParsingHdr" Multiplicity="0..1" />
+          <End Role="PIT_Stg_ParsingItemDetail" Type="Self.PIT_Stg_ParsingItemDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PIT_Stg_ParsingHdr">
+              <PropertyRef Name="DataLoadID" />
+            </Principal>
+            <Dependent Role="PIT_Stg_ParsingItemDetail">
+              <PropertyRef Name="DataLoadID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PIT_Stg_T__DataL__2D27B809">
+          <End Role="PIT_Stg_TxDotProjects" Type="Self.PIT_Stg_TxDotProjects" Multiplicity="1" />
+          <End Role="PIT_Stg_TxDotProjectItems" Type="Self.PIT_Stg_TxDotProjectItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PIT_Stg_TxDotProjects">
+              <PropertyRef Name="DataLoadID" />
+            </Principal>
+            <Dependent Role="PIT_Stg_TxDotProjectItems">
+              <PropertyRef Name="DataLoadID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ParseFlatFileEntity" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="PIT_App_ProcessRunControl" EntityType="Self.PIT_App_ProcessRunControl" />
+          <EntitySet Name="PIT_Meta_ProcessDefn" EntityType="Self.PIT_Meta_ProcessDefn" />
+          <EntitySet Name="PIT_Meta_ProjectCategories" EntityType="Self.PIT_Meta_ProjectCategories" />
+          <EntitySet Name="PIT_Meta_ProjectSubCategories" EntityType="Self.PIT_Meta_ProjectSubCategories" />
+          <EntitySet Name="PIT_Stg_ParsingHdr" EntityType="Self.PIT_Stg_ParsingHdr" />
+          <EntitySet Name="PIT_Stg_ParsingItemDetail" EntityType="Self.PIT_Stg_ParsingItemDetail" />
+          <EntitySet Name="PIT_Stg_TxDotProjectItems" EntityType="Self.PIT_Stg_TxDotProjectItems" />
+          <EntitySet Name="PIT_Stg_TxDotProjects" EntityType="Self.PIT_Stg_TxDotProjects" />
+          <AssociationSet Name="FK__PIT_App_P__Proce__1B0907CE" Association="Self.FK__PIT_App_P__Proce__1B0907CE">
+            <End Role="PIT_Meta_ProcessDefn" EntitySet="PIT_Meta_ProcessDefn" />
+            <End Role="PIT_App_ProcessRunControl" EntitySet="PIT_App_ProcessRunControl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PIT_Stg_T__Proce__20C1E124" Association="Self.FK__PIT_Stg_T__Proce__20C1E124">
+            <End Role="PIT_App_ProcessRunControl" EntitySet="PIT_App_ProcessRunControl" />
+            <End Role="PIT_Stg_TxDotProjects" EntitySet="PIT_Stg_TxDotProjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PIT_Meta___Proje__3A81B327" Association="Self.FK__PIT_Meta___Proje__3A81B327">
+            <End Role="PIT_Meta_ProjectCategories" EntitySet="PIT_Meta_ProjectCategories" />
+            <End Role="PIT_Meta_ProjectSubCategories" EntitySet="PIT_Meta_ProjectSubCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PIT_Stg_P__DataL__48CFD27E" Association="Self.FK__PIT_Stg_P__DataL__48CFD27E">
+            <End Role="PIT_Stg_ParsingHdr" EntitySet="PIT_Stg_ParsingHdr" />
+            <End Role="PIT_Stg_ParsingItemDetail" EntitySet="PIT_Stg_ParsingItemDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PIT_Stg_T__DataL__2D27B809" Association="Self.FK__PIT_Stg_T__DataL__2D27B809">
+            <End Role="PIT_Stg_TxDotProjects" EntitySet="PIT_Stg_TxDotProjects" />
+            <End Role="PIT_Stg_TxDotProjectItems" EntitySet="PIT_Stg_TxDotProjectItems" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ParseFlatFileStoreContainer" CdmEntityContainer="ParseFlatFileEntity">
+          <EntitySetMapping Name="PIT_App_ProcessRunControl">
+            <EntityTypeMapping TypeName="ParseFlatFile.PIT_App_ProcessRunControl">
+              <MappingFragment StoreEntitySet="PIT_App_ProcessRunControl">
+                <ScalarProperty Name="ProcessRunControlID" ColumnName="ProcessRunControlID" />
+                <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+                <ScalarProperty Name="BeginTime" ColumnName="BeginTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+                <ScalarProperty Name="DataColumn" ColumnName="DataColumn" />
+                <ScalarProperty Name="DataColumn1" ColumnName="DataColumn1" />
+                <ScalarProperty Name="DataColumn2" ColumnName="DataColumn2" />
+                <ScalarProperty Name="DataColumn3" ColumnName="DataColumn3" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PIT_Meta_ProcessDefn">
+            <EntityTypeMapping TypeName="ParseFlatFile.PIT_Meta_ProcessDefn">
+              <MappingFragment StoreEntitySet="PIT_Meta_ProcessDefn">
+                <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PIT_Meta_ProjectCategories">
+            <EntityTypeMapping TypeName="ParseFlatFile.PIT_Meta_ProjectCategories">
+              <MappingFragment StoreEntitySet="PIT_Meta_ProjectCategories">
+                <ScalarProperty Name="ProjectCatID" ColumnName="ProjectCatID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PIT_Meta_ProjectSubCategories">
+            <EntityTypeMapping TypeName="ParseFlatFile.PIT_Meta_ProjectSubCategories">
+              <MappingFragment StoreEntitySet="PIT_Meta_ProjectSubCategories">
+                <ScalarProperty Name="ProjectSubCatID" ColumnName="ProjectSubCatID" />
+                <ScalarProperty Name="ProjectCatID" ColumnName="ProjectCatID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PIT_Stg_ParsingHdr">
+            <EntityTypeMapping TypeName="ParseFlatFile.PIT_Stg_ParsingHdr">
+              <MappingFragment StoreEntitySet="PIT_Stg_ParsingHdr">
+                <ScalarProperty Name="DataLoadID" ColumnName="DataLoadID" />
+                <ScalarProperty Name="ProcessRunControlID" ColumnName="ProcessRunControlID" />
+                <ScalarProperty Name="County" ColumnName="County" />
+                <ScalarProperty Name="Highway" ColumnName="Highway" />
+                <ScalarProperty Name="length" ColumnName="length" />
+                <ScalarProperty Name="Control" ColumnName="Control" />
+                <ScalarProperty Name="DBEGoal" ColumnName="DBEGoal" />
+                <ScalarProperty Name="ProjectNumber" ColumnName="ProjectNumber" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="TimeForCompletion" ColumnName="TimeForCompletion" />
+                <ScalarProperty Name="Guaranty" ColumnName="Guaranty" />
+                <ScalarProperty Name="EstimatedCost" ColumnName="EstimatedCost" />
+                <ScalarProperty Name="BidsReceivedUntil" ColumnName="BidsReceivedUntil" />
+                <ScalarProperty Name="BidsWillBeOpened" ColumnName="BidsWillBeOpened" />
+                <ScalarProperty Name="MailOrDeliverBidsTo" ColumnName="MailOrDeliverBidsTo" />
+                <ScalarProperty Name="PandSEContact" ColumnName="PandSEContact" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+                <ScalarProperty Name="ElectronicBiddingWebsite" ColumnName="ElectronicBiddingWebsite" />
+                <ScalarProperty Name="SBEGoal" ColumnName="SBEGoal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PIT_Stg_ParsingItemDetail">
+            <EntityTypeMapping TypeName="ParseFlatFile.PIT_Stg_ParsingItemDetail">
+              <MappingFragment StoreEntitySet="PIT_Stg_ParsingItemDetail">
+                <ScalarProperty Name="DataLoadItemID" ColumnName="DataLoadItemID" />
+                <ScalarProperty Name="DataLoadID" ColumnName="DataLoadID" />
+                <ScalarProperty Name="ALT" ColumnName="ALT" />
+                <ScalarProperty Name="ItemNO" ColumnName="ItemNO" />
+                <ScalarProperty Name="DESCode" ColumnName="DESCode" />
+                <ScalarProperty Name="ItemDescription" ColumnName="ItemDescription" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="ApproximateQantities" ColumnName="ApproximateQantities" />
+                <ScalarProperty Name="BidPrice" ColumnName="BidPrice" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Seq" ColumnName="Seq" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PIT_Stg_TxDotProjectItems">
+            <EntityTypeMapping TypeName="ParseFlatFile.PIT_Stg_TxDotProjectItems">
+              <MappingFragment StoreEntitySet="PIT_Stg_TxDotProjectItems">
+                <ScalarProperty Name="DataLoadItemID" ColumnName="DataLoadItemID" />
+                <ScalarProperty Name="DataLoadID" ColumnName="DataLoadID" />
+                <ScalarProperty Name="AltCode" ColumnName="AltCode" />
+                <ScalarProperty Name="ItemNo" ColumnName="ItemNo" />
+                <ScalarProperty Name="DESCode" ColumnName="DESCode" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="UOM" ColumnName="UOM" />
+                <ScalarProperty Name="ApproxQuantity" ColumnName="ApproxQuantity" />
+                <ScalarProperty Name="BidPrice" ColumnName="BidPrice" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PIT_Stg_TxDotProjects">
+            <EntityTypeMapping TypeName="ParseFlatFile.PIT_Stg_TxDotProjects">
+              <MappingFragment StoreEntitySet="PIT_Stg_TxDotProjects">
+                <ScalarProperty Name="DataLoadID" ColumnName="DataLoadID" />
+                <ScalarProperty Name="ProcessRunControlID" ColumnName="ProcessRunControlID" />
+                <ScalarProperty Name="County" ColumnName="County" />
+                <ScalarProperty Name="Highway" ColumnName="Highway" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="ControlNumber" ColumnName="ControlNumber" />
+                <ScalarProperty Name="DBEGoal" ColumnName="DBEGoal" />
+                <ScalarProperty Name="ProjectNumber" ColumnName="ProjectNumber" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="TimeForCompletion" ColumnName="TimeForCompletion" />
+                <ScalarProperty Name="Guaranty" ColumnName="Guaranty" />
+                <ScalarProperty Name="EstimatedCost" ColumnName="EstimatedCost" />
+                <ScalarProperty Name="BidsReceivedUntil" ColumnName="BidsReceivedUntil" />
+                <ScalarProperty Name="BidsWillBeOpened" ColumnName="BidsWillBeOpened" />
+                <ScalarProperty Name="DeliverBidsTo" ColumnName="DeliverBidsTo" />
+                <ScalarProperty Name="PSEContact" ColumnName="PSEContact" />
+                <ScalarProperty Name="ProjectExistsAlready" ColumnName="ProjectExistsAlready" />
+                <ScalarProperty Name="ActiveQuotesExistAlready" ColumnName="ActiveQuotesExistAlready" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

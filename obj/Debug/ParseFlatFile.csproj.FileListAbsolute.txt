@@ -1,0 +1,11 @@
+E:\Basanta\ParseFlatFile\ParseFlatFile\bin\Debug\ParseFlatFile.exe.config
+E:\Basanta\ParseFlatFile\ParseFlatFile\bin\Debug\ParseFlatFile.exe
+E:\Basanta\ParseFlatFile\ParseFlatFile\bin\Debug\ParseFlatFile.pdb
+E:\Basanta\ParseFlatFile\ParseFlatFile\bin\Debug\EntityFramework.dll
+E:\Basanta\ParseFlatFile\ParseFlatFile\bin\Debug\EntityFramework.SqlServer.dll
+E:\Basanta\ParseFlatFile\ParseFlatFile\bin\Debug\EntityFramework.xml
+E:\Basanta\ParseFlatFile\ParseFlatFile\bin\Debug\EntityFramework.SqlServer.xml
+E:\Basanta\ParseFlatFile\ParseFlatFile\obj\Debug\ParseFlatFile.csprojResolveAssemblyReference.cache
+E:\Basanta\ParseFlatFile\ParseFlatFile\obj\Debug\ParseFlatFile.csproj.CoreCompileInputs.cache
+E:\Basanta\ParseFlatFile\ParseFlatFile\obj\Debug\ParseFlatFile.exe
+E:\Basanta\ParseFlatFile\ParseFlatFile\obj\Debug\ParseFlatFile.pdb
