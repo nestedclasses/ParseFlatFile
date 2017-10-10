@@ -15,7 +15,7 @@ namespace ParseFlatFile
 
         public static void ParseAndSaveDataToDataBase()
         {
-            string fileName = @"D:\MyFlatFile.csj";
+            string fileName = @"D:\ALL.csj";
             using (System.IO.StreamReader sr = new System.IO.StreamReader(fileName))
             {
                 string line = "";
