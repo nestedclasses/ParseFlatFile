@@ -11,3 +11,4 @@ Description:
   My file is in project folder that is "ALL.csj".
   
   ** Please dont forget to change the file path name in ParseAndSaveDataToDataBase() method before running your project.
+  ** Update the connection string with your server name, Database name and credentials.
