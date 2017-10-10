@@ -8,4 +8,6 @@ Description:
   
   You can see in my Main() function, I'm calling another public static method called "ParseAndSaveDataToDataBase" which is basically contains all the logic to parse and save the data in our Database.
   
-  My file is in D-drive that is @"D:\MyFlatFile.csj"
+  My file is in project folder that is "ALL.csj".
+  
+  ** Please dont forget to change the file path name in ParseAndSaveDataToDataBase() method before running your project.
